@@ -6,5 +6,8 @@ const config = {
 function signUp(payload) {
   return axios.post(`${config.baseUrl}/signup`, payload);
 }
+function addBulletin(payload) {
+  return axios.post(`${config.baseUrl}/bulletins`, payload);
+}
 
-export { signUp };
+export { signUp, addBulletin };

@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap');
 div {
   margin: 2.3vh auto;

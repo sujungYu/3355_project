@@ -18,6 +18,14 @@ export const router = new VueRouter({
       path: '/login',
       component: () => import('@/views/LoginPage.vue'), // 코드 스플리팅
     },
+    {
+      path: '/home/:id',
+      component: () => import('@/views/HomePage.vue'), // 코드 스플리팅
+    },
+    {
+      path: '/bulletin',
+      component: () => import('@/views/BulletinPage.vue'), // 코드 스플리팅
+    },
     // {
     //   path: '*',
     //   component: () => import('@/views/NotFoundPage.vue'),
