@@ -8,13 +8,13 @@
       <div>
         <h2>카테고리 선택</h2>
         <div class="select" @change="select">
-          <input type="radio" id="select1" name="shop" value="언어" />
+          <input type="radio" id="select1" name="shop" value="language" />
           <label for="select1">언어</label>
-          <input type="radio" id="select2" name="shop" value="프로젝트" />
+          <input type="radio" id="select2" name="shop" value="project" />
           <label for="select2">프로젝트</label>
-          <input type="radio" id="select3" name="shop" value="자격증" />
+          <input type="radio" id="select3" name="shop" value="certificate" />
           <label for="select3">자격증</label>
-          <input type="radio" id="select4" name="shop" value="취업" />
+          <input type="radio" id="select4" name="shop" value="job" />
           <label for="select4">취업</label>
         </div>
         <hr

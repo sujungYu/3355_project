@@ -1,15 +1,19 @@
 <template>
   <div>
     <top-title>삼삼오오</top-title>
+    <type-bar></type-bar>
     <i class="fa-solid fa-circle-plus plus" @click="addBulletin"></i>
   </div>
 </template>
 
 <script>
 import TopTitle from '@/components/common/TopTitle.vue';
+import TypeBar from '@/components/TypeBar.vue';
+
 export default {
   components: {
     TopTitle,
+    TypeBar,
   },
   methods: {
     addBulletin() {
