@@ -26,6 +26,10 @@ export const router = new VueRouter({
       path: '/bulletin',
       component: () => import('@/views/BulletinPage.vue'), // 코드 스플리팅
     },
+    {
+      path: '/study/:type/:id',
+      component: () => import('@/views/StudyPage.vue'), // 코드 스플리팅
+    },
     // {
     //   path: '*',
     //   component: () => import('@/views/NotFoundPage.vue'),

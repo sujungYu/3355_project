@@ -26,9 +26,9 @@
         <h2>스터디 기간 및 요일</h2>
         <section>
           <!-- eslint-disable-next-line prettier/prettier -->
-        <date-picker v-model="start" :lang="lang" placeholder="시작일"></date-picker>
+        <date-picker v-model="start" :lang="lang" placeholder="시작일" valueType="format"></date-picker>
           <!-- eslint-disable-next-line prettier/prettier -->
-        <date-picker v-model="end" :lang="lang" placeholder="종료일"></date-picker>
+        <date-picker v-model="end" :lang="lang" placeholder="종료일" valueType="format"></date-picker>
         </section>
         <hr
           style="width:88vw; height:1px; border:none; background-color:rgb(233, 233, 222);"
@@ -112,7 +112,6 @@ export default {
         period: this.studyPeriod,
       };
       addBulletin(newBulletin);
-      console.log('go');
       this.$router.go(-1);
     },
   },
@@ -187,7 +186,7 @@ section {
 }
 .mx-datepicker {
   margin: 0;
-  width: 35vw;
+  width: 41vw;
   height: 9vh;
 }
 .mx-icon-calendar {

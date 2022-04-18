@@ -1,19 +1,22 @@
 <template>
   <div>
     <top-title>삼삼오오</top-title>
-    <type-bar></type-bar>
+    <!-- <type-bar></type-bar> -->
     <i class="fa-solid fa-circle-plus plus" @click="addBulletin"></i>
+    <bulletin-list></bulletin-list>
   </div>
 </template>
 
 <script>
 import TopTitle from '@/components/common/TopTitle.vue';
-import TypeBar from '@/components/TypeBar.vue';
+// import TypeBar from '@/components/TypeBar.vue';
+import BulletinList from '@/components/BulletinList.vue';
 
 export default {
   components: {
     TopTitle,
-    TypeBar,
+    // TypeBar,
+    BulletinList,
   },
   methods: {
     addBulletin() {
