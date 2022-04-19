@@ -23,7 +23,11 @@
       </div>
 
       <div>
-        <h2>스터디 기간 및 요일</h2>
+        <h2>스터디 기간</h2>
+        <!-- <select id="date" @change="date" class="date">
+          <option value="7일">월</option>
+          <option value="10일">화</option>
+        </select> -->
         <section>
           <!-- eslint-disable-next-line prettier/prettier -->
         <date-picker v-model="start" :lang="lang" placeholder="시작일" valueType="format"></date-picker>
@@ -34,11 +38,15 @@
           style="width:88vw; height:1px; border:none; background-color:rgb(233, 233, 222);"
         />
       </div>
+
       <div class="textarea-container">
-        <h2 class="text-container">스터디 소개 및 규칙</h2>
+        <h2 class="text-container">스터디 소개</h2>
         <select id="period" @change="period" class="period">
-          <option value="7일">7일</option>
-          <option value="10일">10일</option>
+          <option selected="disabled">모집마감일</option>
+          <option value="7">7일 후</option>
+          <option value="10">10일 후</option>
+          <option value="15">15일 후</option>
+          <option value="30">30일 후</option>
         </select>
         <textarea v-model="studyRule"> </textarea>
       </div>
@@ -138,6 +146,7 @@ h2 {
   border-right: 0;
   height: 5.8vh;
   width: 86vw;
+  outline-color: rgb(245, 109, 145);
 }
 .title::placeholder {
   color: rgb(223, 223, 222);
@@ -209,7 +218,7 @@ td.cell.active {
   width: 86vw;
 }
 .text-container {
-  width: 60vw;
+  width: 57vw;
   display: inline-block;
   margin-bottom: 1vh;
 }
@@ -231,7 +240,7 @@ textarea::placeholder {
   position: absolute;
   border: 1px solid rgb(233, 233, 222);
   border-radius: 10px;
-  width: 25vw;
+  width: 30vw;
   height: 4vh;
 }
 .submit {

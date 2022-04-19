@@ -44,6 +44,7 @@ input {
   width: 86vw;
   height: 6vh;
   margin-bottom: 3.5vh;
+  outline-color: rgb(245, 109, 145);
   /* font-family: 'Gothic A1', sans-serif; */
 }
 input::placeholder {

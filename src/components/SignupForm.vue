@@ -163,6 +163,7 @@ input {
   margin-bottom: 3vh;
   margin-top: 1.4vh;
   width: 86vw;
+  outline-color: rgb(245, 109, 145);
 }
 label {
   font-size: 1.4rem;
