@@ -39,6 +39,14 @@
         />
       </div>
 
+      <div class="select-container">
+        <h2>스터디 지역</h2>
+        <select-area @si="selectSi" @gungu="selectGunGu"></select-area>
+        <hr
+          style="width:88vw; height:1px; border:none; background-color:rgb(233, 233, 222);"
+        />
+      </div>
+
       <div class="textarea-container">
         <h2 class="text-container">스터디 소개</h2>
         <select id="period" @change="period" class="period">
@@ -59,8 +67,9 @@
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import { addBulletin } from '@/api/index.js';
+import SelectArea from './common/SelectArea.vue';
 export default {
-  components: { DatePicker },
+  components: { DatePicker, SelectArea },
   data() {
     return {
       title: '',
@@ -69,6 +78,8 @@ export default {
       end: null,
       studyRule: '',
       studyPeriod: '',
+      si: '',
+      gungu: '',
 
       lang: {
         days: ['일', '월', '화', '수', '목', '금', '토'],
@@ -95,6 +106,14 @@ export default {
     };
   },
   methods: {
+    selectSi(si) {
+      console.log(si);
+      this.si = si;
+    },
+    selectGunGu(gungu) {
+      console.log(gungu);
+      this.gungu = gungu;
+    },
     select() {
       const sl = document.getElementsByName('shop').length;
 
@@ -118,6 +137,9 @@ export default {
         end: this.end,
         rule: this.studyRule,
         period: this.studyPeriod,
+        do: this.si,
+        sigungu: this.gungu,
+        // gungu: this.gungu,
       };
       addBulletin(newBulletin);
       this.$router.go(-1);
@@ -245,9 +267,10 @@ textarea::placeholder {
 }
 .submit {
   font-size: 3.2rem;
-  position: absolute;
-  top: 93vh;
+  position: relative;
   left: 85vw;
+  /* top: 93vh;
+  left: 85vw; */
   color: rgb(245, 109, 145);
 }
 </style>

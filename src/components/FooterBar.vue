@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div class="icon">
+    <div class="icon" @click="home">
       <i class="fa-solid fa-house"></i>
       홈
     </div>
@@ -8,7 +8,7 @@
       <i class="fa-solid fa-comments"></i>
       채팅
     </div>
-    <div class="icon">
+    <div class="icon" @click="attend">
       <i class="fa-solid fa-circle-check"></i>
       출석
     </div>
@@ -16,7 +16,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    home() {
+      const id = JSON.parse(localStorage.getItem('user')).userId;
+      this.$router.push(`/home/${id}`);
+    },
+    attend() {
+      this.$router.push(`/attend`);
+    },
+  },
+};
 </script>
 
 <style scoped>

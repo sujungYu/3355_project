@@ -4,6 +4,8 @@ const Bulletin = {
   state: {
     bulletinList: [],
     studyInfo: '',
+    attendStudy: [],
+    attendName: '',
   },
   mutations: {
     renewList(state, payload) {
@@ -11,6 +13,12 @@ const Bulletin = {
     },
     nowStudy(state, payload) {
       state.studyInfo = payload;
+    },
+    attendList(state, payload) {
+      state.attendStudy = payload;
+    },
+    nowAttend(state, payload) {
+      state.attendName = payload;
     },
   },
   actions: {
@@ -36,6 +44,20 @@ const Bulletin = {
         .catch(err => {
           console.log(err);
         });
+    },
+    async attendUser({ commit }, payload) {
+      await axios.get(`${'http://localhost:8001'}/users`).then(res => {
+        const filterStudy = [];
+        res.data.filter(e => {
+          e.user.filter(d => {
+            if (d.name == payload) {
+              return filterStudy.push(e);
+            }
+          });
+        });
+        console.log(filterStudy);
+        commit('attendList', filterStudy);
+      });
     },
   },
   getters: {},
