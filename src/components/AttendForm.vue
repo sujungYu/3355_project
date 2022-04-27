@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <select id="name" @change="myList" class="selectStudy">
+      <option selected disabled>스터디 선택</option>
       <option v-for="studyNameList in studyNameLists" :key="studyNameList">
         {{ studyNameList }}
       </option>
@@ -19,9 +20,9 @@
         1회
       </template>
     </attend>
-    <template v-if="this.useruser.length != 0">
+    <template v-if="this.onlyName.length != 0">
       <select id="user" v-model="user" @change="user" class="member">
-        <option v-for="user in useruser" :key="user">
+        <option v-for="user in onlyName" :key="user">
           {{ user }}
         </option>
       </select>
@@ -56,45 +57,49 @@ export default {
     return {
       user: '',
       studyNameLists: [],
-      allStudy: [],
+      studyList: [],
       studyUsers: [],
-      useruser: [],
-      onlyUser: [],
+      onlyName: [],
+      // onlyUser: [],
     };
   },
   async created() {
     this.user = JSON.parse(localStorage.getItem('user')).userName;
-    await this.$store.dispatch('attendUser', this.user);
-    this.allStudy = this.$store.state.Bulletin.attendStudy;
-    this.allStudy.filter(e => {
+    await this.$store.dispatch('setAttend', this.user);
+    this.studyList = this.$store.state.Bulletin.myStudy;
+    this.studyList.filter(e => {
       return this.studyNameLists.push(e.title);
     });
   },
   methods: {
-    myList() {
+    init() {
       this.studyUsers = [];
       this.onlyUser = [];
+    },
+    myList() {
+      this.init();
       const selecName = document.getElementById('name');
       const selectOption = selecName.options[selecName.selectedIndex].value;
       this.$store.commit('nowAttend', selectOption);
       //   this.$store.dispatch('attendCheck', selectOption) // AttendCheckPage를 위해
-      this.allStudy.filter(e => {
+      this.studyList.filter(e => {
         if (e.title == selectOption) {
+          this.$store.commit('attendId', e.id);
           return this.studyUsers.push(e.user);
         }
       });
-      const alal = this.studyUsers[0];
+      // console.log(this.studyUsers);
+      // const alal = this.studyUsers[0];
       //   console.log(this.user);
-      for (let i = 0; i < alal.length; i++) {
-        if (alal[i].name == this.user && alal[i].manager == true) {
-          for (let k = 0; k < alal.length; k++) {
-            console.log(alal[k].name);
-            this.useruser.push(alal[k].name);
+      const users = this.studyUsers[0];
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].name == this.user && users[i].manager == true) {
+          for (let k = 0; k < users.length; k++) {
+            this.onlyName.push(users[k].name);
           }
-          console.log(this.useruser);
-          return this.useruse;
+          return this.$store.commit('studyUser', this.onlyName);
         } else {
-          return (this.useruser = []);
+          return (this.onlyName = []);
         }
       }
     },

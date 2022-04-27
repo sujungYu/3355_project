@@ -12,5 +12,8 @@ function signUp(payload) {
 function addBulletin(payload) {
   return axios.post(`${subConfig.baseUrl}/${payload.type}`, payload);
 }
+function memberAttend(payload) {
+  return axios.post(`${subConfig.baseUrl}/userAttend`, payload);
+}
 
-export { signUp, addBulletin };
+export { signUp, addBulletin, memberAttend };

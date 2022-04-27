@@ -7,6 +7,7 @@ const Calendar = {
     month: '',
     day: '',
     attend: [],
+    checkUser: [],
   },
   mutations: {
     initAttend(state) {
@@ -17,18 +18,21 @@ const Calendar = {
       state.month = payload.month;
       state.day = payload.day;
     },
-    addNewTodo(state, payload) {
+    addNewAtten(state, payload) {
       state.attend.push(payload);
     },
     clearAll(state) {
       state.attend = [];
+    },
+    studyUser(state, payload) {
+      state.checkUser = payload;
     },
   },
   actions: {
     getAttend({ commit }, payload) {
       //해당방ID를 payload로 받음
       // eslint-disable-next-line prettier/prettier
-      axios.get(`${'http://localhost:8000'}/todolist?calendarId=${payload}`)
+      axios.get(`${'http://localhost:8001'}/userAttend?studyId=${payload}`)
         .then(res => {
           let i;
           for (i = 0; i < res.data.length; i++) {

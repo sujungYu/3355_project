@@ -56,5 +56,21 @@
       ],
       "id": 2
     }
+  ],
+  "userAttend": [
+    {
+      "name": "유수정",
+      "attend": "attend",
+      "createdAt": "2022-4-6",
+      "studyId": 1,
+      "id": 1
+    },
+    {
+      "name": "이다은",
+      "attend": "late",
+      "createdAt": "2022-4-6",
+      "studyId": 1,
+      "id": 2
+    }
   ]
 }
