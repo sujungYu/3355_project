@@ -12,6 +12,10 @@
       <i class="fa-solid fa-circle-check"></i>
       출석
     </div>
+    <!-- <div class="icon" @click="info">
+      <i class="fa-solid fa-user"></i>
+      내 정보
+    </div> -->
   </div>
 </template>
 
@@ -25,6 +29,9 @@ export default {
     attend() {
       this.$router.push(`/attend`);
     },
+    // info() {
+
+    // }
   },
 };
 </script>

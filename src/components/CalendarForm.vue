@@ -18,16 +18,27 @@
           <td
             v-for="(day, index) in date"
             :key="index"
-            :class="{}"
-            @click="clickDate(day)"
+            :class="{
+              'selected-date':
+                isToday(year, month, day) && !isPrevDates(day, idx),
+              'prev-dates': isPrevDates(day, idx),
+            }"
+            @click="clickDate(day, isPrevDates(day, idx))"
             class="pointer"
           >
             {{ day }}
+            <!-- <span
+              v-if="isToday(year, month, day) && !isPrevDates(day, idx)"
+              class="selected-date"
+              >{{ day }}
+            </span>
+            <span v-else>{{ day }}</span> -->
+
             <div
-              v-if="getMatchedTodos(day).length > 0 && !isPrevDates(day, idx)"
+              v-if="getMatchedAttend(day).length > 0 && !isPrevDates(day, idx)"
             >
-              <div v-for="(todo, idx) in getMatchedTodos(day)" :key="idx">
-                <!-- {{ todo.title }} -->
+              <div v-for="(attend, idx) in getMatchedAttend(day)" :key="idx">
+                {{ attend.name }}{{ attend.attend }}
               </div>
             </div>
           </td>
@@ -54,9 +65,10 @@ export default {
       dates: [],
       year: 0,
       month: 0,
-      currentDate: new Date().getDate(),
+      day: new Date().getDate(),
       currentYear: 0,
       currentMonth: 0,
+      currentDate: new Date().getDate(),
       clickDay: 0,
       prevDate: [],
       previewDate: [],
@@ -65,6 +77,9 @@ export default {
     };
   },
   computed: {
+    monthToString() {
+      return this.months[this.month - 1];
+    },
     isCurrentDate() {
       let status = false;
       if (this.currentYear === 0 && this.currentMonth === 0) {
@@ -80,6 +95,15 @@ export default {
   created() {
     this.init();
     this.$store.commit('initAttend');
+    // let status = false;
+    // if (this.currentYear === 0 && this.currentMonth === 0) {
+    //   status = true;
+    // } else {
+    //   status =
+    //     this.currentYear === new Date().getFullYear() &&
+    //     this.currentMonth === new Date().getMonth() + 1;
+    // }
+    // return status;
   },
   methods: {
     init(param) {
@@ -155,7 +179,9 @@ export default {
     },
     padDates(daysOfWeek) {
       const len = daysOfWeek.length;
+      // console.log(len);
       const leftDays = 7 - len;
+      console.log(leftDays);
       if (len >= 0 && len < 7) {
         for (let i = 1; i <= leftDays; i++) {
           daysOfWeek.push(i);
@@ -164,6 +190,7 @@ export default {
       }
     },
     controlMonth(p) {
+      this.prevDate = [];
       if (p === 'prev') {
         this.currentMonth = this.month - 1;
         this.currentYear = this.year;
@@ -182,28 +209,128 @@ export default {
       const param = [this.currentYear, this.currentMonth];
       this.init(param);
     },
-    getMatchedTodos(day) {
-      return this.$store.state.Calendar.attend.filter(todo => {
-        const todoDate = new Date(todo.createdAt);
-        const isDateMatched = todoDate.getDate() === day;
-        const isMonthMatched = todoDate.getMonth() === this.month - 1;
-        const isYearMathced = todoDate.getFullYear() === this.year;
+    getMatchedAttend(day) {
+      return this.$store.state.Calendar.attend.filter(attend => {
+        const attendDate = new Date(attend.createdAt);
+        const isDateMatched = attendDate.getDate() === day;
+        const isMonthMatched = attendDate.getMonth() === this.month - 1;
+        const isYearMathced = attendDate.getFullYear() === this.year;
         return isDateMatched && isMonthMatched && isYearMathced;
       });
     },
     isPrevDates(day, idx) {
+      // console.log(this.previewDate);
       return (
         (this.prevDate.indexOf(day) > -1 && idx < 1) ||
         (this.previewDate.indexOf(day) > -1 && idx > 1)
       );
     },
-    clickDate(day) {
+    clickDate(day, idx) {
+      // console.log(this.previewDate);
+      // console.log(idx);
+      const attendYear = this.year;
+      let attendMonth = this.month;
+      const attendDay = day;
+      // console.log(attendDay);
+      // eslint-disable-next-line prettier/prettier
+      if(idx) {
+        if (this.prevDate.includes(day)) {
+          // console.log('이전');
+          attendMonth = attendMonth - 1;
+        } else {
+          // console.log('이후');
+          attendMonth = attendMonth + 1;
+        }
+      } else {
+        attendMonth = this.month;
+        // console.log('지금');
+      }
+      // console.log(attendMonth);
+      // this.prevDate.filter(e => {
+      //   console.log(e);
+      //   if (e == day) {
+      //     console.log('이전');
+      //     return (this.attendMonth = attendMonth - 1);
+      //   } else {
+      //     console.log('이후');
+      //     return (this.attendMonth = attendMonth + 1);
+      //   }
+      // });
+
+      // if(idx ==true) {
+      //   for (let i = 0; i < this.prevDate.length; i++) {
+      //     console.log(this.prevDate[0]);
+      //     if (this.prevDate[i] == day) {
+      //       console.log('이전');
+      //       console.log(day);
+      //       this.attendMonth = attendMonth - 1;
+      //       break;
+      //     } else {
+      //       this.attendMonth = attendMonth + 1;
+      //       console.log('이후');
+      //       break;
+      //     }
+      //   }
+      // } else {
+      //   this.attendDay = day;
+      // }
+      // this.prevDate.forEach(e => {
+      //   if (idx == true && e == day) {
+      //     console.log('이전');
+      //     this.attendMonth = attendMonth - 1;
+      //     return false;
+      //   } else if (idx == true && e != day) {
+      //     this.attendMonth = attendMonth + 1;
+      //     console.log('이후');
+      //     return false;
+      //   } else {
+      //     this.attendMonth = this.month;
+      //     console.log('지금');
+      //     return false;
+      //   }
+      // });
+
+      // if(idx == true && this.forEach.)
+      // if (idx == true && this.prevDate.forEach(prevDate => {
+      //     if (prevDate == day) {
+      //       console.log(prevDate);
+      //       console.log('이전');
+      //       this.attendMonth = attendMonth - 1;
+      //       return;
+      //     } else {
+      //       this.attendMonth = attendMonth + 1;
+      //       console.log('이후');
+      //       return;
+      //     }
+      //   })
+      // )
+      //   return;
+      // else {
+      //   this.attendMonth = this.month;
+      //   console.log('지금');
+      //   console.log(this.attendMonth);
+      // }
+
+      // console.log(this.prevDate);
+
       this.showModal = !this.showModal;
       this.$store.commit('clickDate', {
-        year: this.year,
-        month: this.month,
-        day: day,
+        year: attendYear,
+        month: attendMonth,
+        day: attendDay,
       });
+    },
+    isToday(year, month, day) {
+      let date = new Date();
+      if (
+        year == date.getFullYear() &&
+        month == date.getMonth() + 1 &&
+        day == date.getDate()
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 };
@@ -286,5 +413,20 @@ th:nth-child(7) {
 }
 .pointer {
   cursor: pointer;
+}
+.rounded {
+  -moz-border-radius: 20px 20px 20px 20px;
+  border-radius: 20px 20px 20px 20px;
+  border: solid 1px #ffffff;
+  background-color: #2b6bd1;
+  padding: 10px;
+  color: #ffffff;
+}
+.prev-dates {
+  color: lightgray;
+  /* background: none; */
+}
+.selected-date {
+  background-color: rgb(245, 109, 145);
 }
 </style>

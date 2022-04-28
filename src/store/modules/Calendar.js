@@ -18,7 +18,7 @@ const Calendar = {
       state.month = payload.month;
       state.day = payload.day;
     },
-    addNewAtten(state, payload) {
+    addNewAttend(state, payload) {
       state.attend.push(payload);
     },
     clearAll(state) {
@@ -27,6 +27,9 @@ const Calendar = {
     studyUser(state, payload) {
       state.checkUser = payload;
     },
+    // initAttend(state) {
+    //   state.attend = [];
+    // },
   },
   actions: {
     getAttend({ commit }, payload) {
